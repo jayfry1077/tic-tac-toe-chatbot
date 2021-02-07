@@ -1,0 +1,34 @@
+{
+  "output_file": "Settings/settings.json",
+  "GameStartMessage": {
+      "type": "textbox",
+      "value": "Start Game",
+      "label": "Info",
+      "tooltip": "This field should only be filled when using the user_specific permission.",
+      "group": "Core"
+  },
+  "GameEndMessage": {
+    "type": "textbox",
+    "value": "Game Over",
+    "label": "Info",
+    "tooltip": "This field should only be filled when using the user_specific permission.",
+    "group": "Core"
+  },
+  "Cooldown": {
+    "type": "slider",
+    "value": 120,
+    "min": 0,
+    "max": 6000,
+    "ticks": 1,
+    "label": "Cooldown (seconds)",
+    "tooltip": "How long the command should go on cooldown for",
+    "group": "Core"
+  },
+  "Command": {
+    "type": "textbox",
+    "value": "!TicTacToe",
+    "label": "Command",
+    "tooltip": "This needs two players",
+    "group": "Core"
+  }
+}
