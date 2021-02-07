@@ -161,7 +161,7 @@ def determineWinner(gameboard):
         return 'Game is a Draw!'
     else:
         # If nothing above is true, then the game is still running.
-        'Running'
+        return 'Running'
 
 def winningPlayer(marker):
     # If is not X then in O
