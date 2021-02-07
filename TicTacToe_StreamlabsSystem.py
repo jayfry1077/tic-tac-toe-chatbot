@@ -26,7 +26,7 @@ class GameState(object):
             with codecs.open(CurrentBidFile, encoding='utf-8-sig', mode='r') as f:
                 self.__dict__ = json.load(f, encoding='utf-8-sig')
         except:
-            self.BOARD = ["U","U","U","U","U","U","U","U","U","U"]
+            self.BOARD = ['None',"U","U","U","U","U","U","U","U","U"]
             self.PLAYER_1 = True
             self.PLAYER_2 = False
 
@@ -44,7 +44,7 @@ class GameState(object):
     def Reset(self, currentGameFile):
         """ Reset settings files. """
         try:
-            self.BOARD = ["U","U","U","U","U","U","U","U","U","U"]
+            self.BOARD = ['None',"U","U","U","U","U","U","U","U","U"]
             self.PLAYER_1 = True
             self.PLAYER_2 = False
             with codecs.open(currentGameFile, encoding="utf-8-sig", mode="w+") as f:
