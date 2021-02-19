@@ -1,3 +1,4 @@
+from TTT_Settings_Module import MySettings
 import sys
 import os
 import codecs
@@ -7,9 +8,8 @@ sys.path.append(os.path.dirname(__file__))
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 
 
-from TTT_Settings_Module import MySettings
-
-settings_file = os.path.join(os.path.dirname(__file__), "tic_tac_toe_settings.json")
+settings_file = os.path.join(os.path.dirname(
+    __file__), "tic_tac_toe_settings.json")
 game_state = os.path.join(os.path.dirname(__file__), "game_state.json")
 
 ScriptName = "Tic Tac Toe"
@@ -21,12 +21,13 @@ Version = "1.0.0.0"
 
 class GameState(object):
     """ Load in saved settings file if available else set default values. """
-    def __init__(self, CurrentBidFile = None):
+
+    def __init__(self, CurrentBidFile=None):
         try:
             with codecs.open(CurrentBidFile, encoding='utf-8-sig', mode='r') as f:
                 self.__dict__ = json.load(f, encoding='utf-8-sig')
         except:
-            self.BOARD = ['None',"U","U","U","U","U","U","U","U","U"]
+            self.BOARD = ['None', "U", "U", "U", "U", "U", "U", "U", "U", "U"]
             self.PLAYER_1 = True
             self.PLAYER_2 = False
 
@@ -36,7 +37,8 @@ class GameState(object):
             with codecs.open(currentGameFile, encoding="utf-8-sig", mode="w+") as f:
                 json.dump(self.__dict__, f, encoding="utf-8")
             with codecs.open(currentGameFile.replace("json", "js"), encoding="utf-8-sig", mode="w+") as f:
-                f.write("var settings = {0};".format(json.dumps(self.__dict__, encoding='utf-8')))
+                f.write("var settings = {0};".format(
+                    json.dumps(self.__dict__, encoding='utf-8')))
         except:
             Parent.Log(ScriptName, "Failed to save game file.")
         return
@@ -44,16 +46,18 @@ class GameState(object):
     def Reset(self, currentGameFile):
         """ Reset settings files. """
         try:
-            self.BOARD = ['None',"U","U","U","U","U","U","U","U","U"]
+            self.BOARD = ['None', "U", "U", "U", "U", "U", "U", "U", "U", "U"]
             self.PLAYER_1 = True
             self.PLAYER_2 = False
             with codecs.open(currentGameFile, encoding="utf-8-sig", mode="w+") as f:
                 json.dump(self.__dict__, f, encoding="utf-8")
             with codecs.open(currentGameFile.replace("json", "js"), encoding="utf-8-sig", mode="w+") as f:
-                f.write("var settings = {0};".format(json.dumps(self.__dict__, encoding='utf-8')))
+                f.write("var settings = {0};".format(
+                    json.dumps(self.__dict__, encoding='utf-8')))
         except:
             Parent.Log(ScriptName, "Failed to save game file.")
         return
+
 
 def Init():
     global my_settings
@@ -70,28 +74,31 @@ def Init():
 
     return
 
+
 def Execute(data):
     if data.IsChatMessage() is True and data.GetParam(0).lower() == my_settings.Command.lower():
 
-
         # If they didn't pass a move, we just return.
         if data.GetParamCount() < 2:
-            SendMessage(data, 'You need to start the game by making a move. Example: !TicTacToe 1')
+            SendMessage(
+                data, 'You need to start the game by making a move. Example: !TicTacToe 1')
             return
 
-        # Cast user input to int 
+        # Cast user input to int
         try:
             user_input = int(data.GetParam(1))
 
             # If they enter a number to large or to small
             if user_input < 1 or user_input > 9:
-                SendMessage(data, '{} is out of range. Valid options are 1-9'.format(user_input))
-
+                SendMessage(
+                    data, '{} is out of range. Valid options are 1-9'.format(user_input))
                 return
 
         except:
-            Parent.Log(ScriptName, 'Invalid game option. {}'.format(data.GetParam(1)))
-            SendMessage(data, '{} is not a valid integer.'.format(data.GetParam(1)))
+            Parent.Log(ScriptName, 'Invalid game option. {}'.format(
+                data.GetParam(1)))
+            SendMessage(
+                data, '{} is not a valid integer.'.format(data.GetParam(1)))
             return
 
         # Set the marker and switch which player is active
@@ -105,9 +112,12 @@ def Execute(data):
             gameState.PLAYER_2 = False
 
         # Print the board out to the chat
-        SendMessage(data, " {} | {} | {} ".format(gameState.BOARD[1],gameState.BOARD[2],gameState.BOARD[3]))
-        SendMessage(data, " {} | {} | {} ".format(gameState.BOARD[4],gameState.BOARD[5],gameState.BOARD[6]))
-        SendMessage(data, " {} | {} | {} ".format(gameState.BOARD[7],gameState.BOARD[8],gameState.BOARD[9]))
+        SendMessage(data, " {} | {} | {} ".format(
+            gameState.BOARD[1], gameState.BOARD[2], gameState.BOARD[3]))
+        SendMessage(data, " {} | {} | {} ".format(
+            gameState.BOARD[4], gameState.BOARD[5], gameState.BOARD[6]))
+        SendMessage(data, " {} | {} | {} ".format(
+            gameState.BOARD[7], gameState.BOARD[8], gameState.BOARD[9]))
 
         # Check if there isa winner or draw
         winner = determineWinner(gameState.BOARD)
@@ -117,11 +127,11 @@ def Execute(data):
             gameState.Reset(game_state)
         else:
             gameState.Save(game_state)
-        
+
         return
 
-
     return
+
 
 def Tick():
     return
@@ -162,6 +172,7 @@ def determineWinner(gameboard):
     else:
         # If nothing above is true, then the game is still running.
         return 'Running'
+
 
 def winningPlayer(marker):
     # If is not X then in O
